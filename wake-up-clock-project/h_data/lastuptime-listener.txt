@@ -1,0 +1,1 @@
+{'year': 2019, 'hour_12HR': 2, 'minute': 30, 'second': 44, 'month': 1, 'hour_24HR': 14, 'day': 4, 'yearday': 4, 'daylightsavingtime': False, 'pm/am': 'pm', 'weekday': 4}

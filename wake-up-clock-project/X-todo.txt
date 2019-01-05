@@ -1,0 +1,12 @@
+[ ] - The ability to set a wake up time for each day of the week (the time may be different for each day!)
+[ ] - The ability to set how long a wakeup lasts for (ex: 15 minutes on Monday, but 30 minutes on Saturday)
+[ ] - The ability to set a wakeup color (text and background) for each day
+[ ] - The ability to set day and night times (i.e. 07:00 AM for daytime, and 07:30 PM for night time) which will:
+[ ] - have different brightness levels for each time
+[ ] - have different clock colors (text and background) for each time
+[ ] - these don't have to be different for every day - one set of times can apply to all days
+[ ] - Anti-screen burn in protection (move the text slightly when it updates)
+
+Everything should be configured via the file(s), so we can create a web service to modify them.
+
+[ ] - If you wanted to, make a picture of the sun rise when a wakeup time is reached.
