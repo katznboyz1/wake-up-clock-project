@@ -1,0 +1,1 @@
+All of these images are MINE. Do not copyright them. I took them with MY hands and MY camera. So please, just leave them be.

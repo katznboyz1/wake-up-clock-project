@@ -21,3 +21,8 @@ Instructions for starting up a auto restarting connection:
 Instructions for using the command line:
 	In this command line, all commands start with ":", so "help" is not a command, but ":help" is a command.
 	For a list of valid commands, type ":help".
+
+Defaults:
+	Bed time: 19:30:00
+	Wake up time: 07:00:00
+	Wake up length: 00:30:00

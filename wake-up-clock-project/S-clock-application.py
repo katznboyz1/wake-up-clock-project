@@ -13,17 +13,19 @@ class pyscope :
         os.system("""gpio -g mode 18 pwm""")
         os.system("""gpio pwmc 1000""")
         os.system("""sudo sh -c 'echo "0" > /sys/class/backlight/soc\:backlight/brightness'""")
-        os.putenv('SDL_VIDEODRIVER', 'fbcon')
-        os.putenv('SDL_FBDEV', '/dev/fb1')
+        if (os.getenv('HOME') == str(open('./h_data/config.txt').read()).split('\n')[4].split(':')[1]):
+            os.putenv('SDL_VIDEODRIVER', 'fbcon')
+            os.putenv('SDL_FBDEV', '/dev/fb1')
         disp_no = os.getenv("DISPLAY")
         if disp_no:
             print ("I'm running under X display = {0}".format(disp_no))
         drivers = ['fbcon', 'directfb', 'svgalib']
+        found = False
         try:
             pygame.display.init()
             found = True
         except:
-            found = False
+            pass
         if (found != True):
             for driver in drivers:
                 if not os.getenv('SDL_VIDEODRIVER'):
@@ -59,15 +61,31 @@ class pyscope :
     def test(self):
         while (self.running):
             exec('self.data = {}'.format(str(open('./h_data/data.txt').read())))
+            imageToBlit = ''
             timenow = clocklib.timeget.getSecondsSinceMidnight()
             weekday = datetime.date.today().strftime("%A").lower()
             wakeuptime = int(self.data['wakeUpTimes'][weekday])
             wakeuptimelimit = int(self.data['wakeUpLengths'][weekday])
+            bedtime = int(self.data['bedTimes'][weekday])
             bgcolor = self.data['backgroundColor']
             fgcolor = self.data['foregroundColor']
             if (timenow > wakeuptime and timenow < (wakeuptime + wakeuptimelimit)): #changes the color of the background and foreground if it is time to wake up
                 bgcolor = self.data['wakeUpBackgroundColor']
                 fgcolor = self.data['wakeUpForegroundColor']
+            else:
+                secondsInADay = 86400
+                if (wakeuptime + wakeuptimelimit > secondsInADay):
+                    wakeUpTimeEnd = (wakeuptime + wakeuptimelimit) - secondsInADay
+                    if (timenow > wakeuptime or timenow < wakeUpTimeEnd):
+                        bgcolor = self.data['wakeUpBackgroundColor']
+                        fgcolor = self.data['wakeUpForegroundColor']
+                elif (timenow > (wakeuptime + wakeuptimelimit) and timenow < bedtime):
+                    bgcolor = self.data['dayBackgroundColor']
+                    fgcolor = self.data['dayForegroundColor']
+                    imageToBlit = './h_images/cruise-ship-at-sea-blue-water.JPG'
+                elif (timenow > bedtime or timenow < wakeuptime):
+                    bgcolor = self.data['backgroundColor']
+                    fgcolor = self.data['foregroundColor']
             try:
                 self.screen.fill(bgcolor)
             except:
@@ -87,6 +105,13 @@ class pyscope :
             x1 = xtra / 2
             y2 = y1 + t.get_size()[1]
             x2 = (self.screen.get_size()[0] - d.get_size()[0]) / 2
+            if (imageToBlit != ''):
+                image = pygame.image.load(imageToBlit)
+                aspectRatio = image.get_size()[1] / image.get_size()[0]
+                image = pygame.transform.scale(image, (int(self.screen.get_size()[1] / aspectRatio), int(self.screen.get_size()[1])))
+                y3 = (self.screen.get_size()[1] - image.get_size()[1]) / 2
+                x3 = (self.screen.get_size()[0] - image.get_size()[0]) / 2
+                self.screen.blit(image, (x3, y3))
             self.screen.blit(t, (x1, y1))
             self.screen.blit(d, (x2, y2))
             pygame.display.update()
