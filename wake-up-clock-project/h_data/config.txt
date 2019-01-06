@@ -1,5 +1,5 @@
 Operate-using-port:9000
 Reach-to-port:9000
-Reach-to-addr:192.168.32.25
+Reach-to-addr:127.0.0.1
 Python3-executable-name:python
 Reach-to-home-dir:/root
