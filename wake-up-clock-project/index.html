@@ -17,6 +17,15 @@
             It can wake you up and let you know when to fall asleep.<br>
             You can control is simply by using a phone. For more info, refer to the documetation included in the <a href = './X-README.txt' style = 'color:black;text-decoration:underline;'>README</a> file.
         </p>
+        <p style = 'text-align:center;'>
+            Here is an example of the clock below (without chronological transitions):<br>
+        </p>
+        <div id = 'clock' style = 'width:480px;height:320px;background-color:black;display:block;margin:auto;border:2px solid gray;border-radius:10px;'>
+            <p id = 'clock_text' style = 'font-family:__clockfont;font-size:90px;text-align:center;color:white;margin-top:15%;'>
+                00:00<br>
+                Noneday<br>
+            </p>
+        </div>
         <!--<img src = './h_images/websiteimage-clock-at-1714-with-ship-sea-background.png' style = 'width:20%;height:auto;display:block;margin-left:auto;margin-right:auto;'>-->
         <p style = 'font-size:3vw;font-family:__clockfont;text-decoration:none;color:black;cursor:grab;text-align:center;'>
             | <a href = '.' style = 'color:blueviolet;text-decoration:none;' onclick = 'alert("This has no permenant download page yet, please download it from the github page instead.");'>Download</a> | <a href = 'https://github.com/katznboyz1/wake-up-clock-project' style = 'color:blueviolet;text-decoration:none;'>Github</a> |
@@ -24,5 +33,19 @@
         <p style = 'font-family:__clockfont;font-size:1vw;text-align:center;'>
             Made  by  ( katznboyz / katznboyz1 )
         </p>
+        <script>
+            function updateclock() {
+                var clockText = document.getElementById('clock_text');
+                var newClockNext = '';
+                var d = new Date();
+                var n = d.getDay();
+                var timenow = Date().split(' ')[4]
+                newClockNext += (timenow.split(':')[0] + ':' + timenow.split(':')[1]);
+                newClockNext += ('<br>' + ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][d.getDay()]).toUpperCase();
+                clockText.innerHTML = newClockNext;
+                window.requestAnimationFrame(updateclock);
+            }
+            window.requestAnimationFrame(updateclock);
+        </script>
     </body>
 </html>
